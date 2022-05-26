@@ -21,7 +21,7 @@ const server = require('./src/app.js');
 const { conn } = require('./src/db.js'); // mio: conn es mi instancia de sequelize (o sea mi base de datos)
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => { // mio: cambiar de true a false si quiero que no se borre la info de la db
+conn.sync({ force: false }).then(() => { // mio: cambiar de true a false si quiero que no se borre la info de la db
   server.listen(3001, () => { // mio: mi back escucha en el 3001 y mi front en el 3000. Si quiero puedo cambiarlo 
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

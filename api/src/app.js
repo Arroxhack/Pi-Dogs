@@ -25,15 +25,7 @@ server.use((req, res, next) => { // mio: todo esto es configuracion de cors
 
 server.use('/', routes); // mio: el server va a usar en "/" las rutas traidas de './routes/index.js' // '/api'
 
-/* application.get("/", (req, res) => { // mio
-  try{
-  //codigo
-  }
-  catch(err){
-      //si fallo
-  next(err) // esto lo hago porque aca abajo tengo un manejador de errores, de esta forma no tengo que hacer un console.log (e) en todos los lugares.
-  }
-}) */
+
 
 // Error catching endware. // mio: esto captura errores
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
