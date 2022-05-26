@@ -103,6 +103,27 @@ Peso
 
 router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // primero hago la busqueda en mi base de datos
     const {idBreed} = req.params;
+    if(idBreed.length > 8){
+        try{
+            const myBreed = await Breed.findByPk(idBreed,{
+                include: Temperament,
+                raw: true,
+                nest:true
+            })
+            const myBreedDetail = Object.assign({},
+                {
+                name: myBreed.name,
+                temperament: myBreed.temperaments.name,
+                height: myBreed.height,
+                weight: myBreed.weight,
+                life_span: myBreed.life_span ? myBreed.life_span : null
+                } 
+            )
+            return res.json(myBreedDetail)
+        }catch(error) {
+            next(error)
+        }
+    } else {
     const idBreedNum = Number(idBreed);
         try{
             const response = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`);
@@ -122,6 +143,7 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
         }catch(error){
             return next(error)
         }
+    }
 })
 
 /* 
