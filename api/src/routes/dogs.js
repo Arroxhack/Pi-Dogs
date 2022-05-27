@@ -119,7 +119,7 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                 life_span: myBreed.life_span ? myBreed.life_span : null
                 } 
             )
-            return res.json(myBreedDetail)
+            return res.json(myBreedDetail ? myBreedDetail : "El id ingresado no corresponde a una raza")
         }catch(error) {
             next(error)
         }
