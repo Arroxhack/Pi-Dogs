@@ -32,6 +32,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     apiDogs.data.forEach(e => {
                         if(e.name.toLowerCase().includes(name.toLowerCase())){
                             dogsWithName.push({
+                                id: e.id,
                                 image: e.image.url,
                                 name: e.name,
                                 temperament: e.temperament,
@@ -41,6 +42,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     })
                     dbDogs.forEach(e => {
                             dogsWithName.push({
+                                id: e.id,
                                 name: e.name,
                                 temperament: e.temperaments.name,
                                 weight: e.weight
@@ -66,6 +68,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
             let allDogs = []
             apiDogs.data.forEach(e => {
                 allDogs.push({
+                    id: e.id,
                     image: e.image.url,
                     name: e.name,
                     temperament: e.temperament,
@@ -74,6 +77,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
             })
             dbDogs.forEach(e => {
                 allDogs.push({
+                    id: e.id,
                     name: e.name,
                     temperament: e.temperaments[0].name,
                     weight: e.weight
@@ -112,6 +116,7 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
             })
             const myBreedDetail = Object.assign({},
                 {
+                id: myBreed.id,
                 name: myBreed.name,
                 temperament: myBreed.temperaments.name,
                 height: myBreed.height,
@@ -130,6 +135,7 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
             const responseFiltrada = response.data.filter(e => e.id === idBreedNum);
             const responseMapeada = responseFiltrada.map(e => {
                 let newObj = {
+                    id: e.id,
                     image: e.image.url,
                     name: e.name,
                     temperament: e.temperament,
@@ -158,38 +164,6 @@ Altura
 Peso
 Años de vida
 */
-
-
-// router.get("/", async(req, res, next) => {
-//     return Dog.findAll()
-//     .then(dogs => {
-//         res.json(dogs)
-//     })
-// })
-
-// router.get("/", async(req, res, next) => { // /dogs?name="...":
-//     res.send("Soy get /dogs")
-// })
-
-// router.get("/", async(req, res, next) => {
-//     axios.get(`https://api.thedogapi.com/v1/breeds/search?q=${raza_perro}`)
-// })
-
-// router.get("/:id", async(req, res, next) => {
-//     res.send("Soy get /dogs/id")
-// })
-
-// router.post("/", async(req, res, next) => {
-//     const {name} = req.body;
-//     try{
-//         const newDog = await Dog.create(
-//             {name}
-//         )
-//         res.json(newDog)
-//     }catch(error){
-//         next(error)
-//     }
-// })
 
 
 module.exports = router;
