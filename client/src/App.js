@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Breeds from './components/Breeds';
 import SearchBar from './components/SearchBar';
 import LandingPage from './components/LandingPage';
+import BreedDetail from './components/BreedDetail';
 
 function App() {
   return (
@@ -18,8 +19,8 @@ function App() {
         <Breeds/>
       </Route> 
       
-      <Route>
-        
+      <Route exact path="/breed/:id">
+        <BreedDetail/>
       </Route>
     </div>
   );

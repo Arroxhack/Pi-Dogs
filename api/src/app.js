@@ -5,29 +5,29 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const { application } = require('express');
 
-require('./db.js'); // mio: requerimos todo de la base de datos para hacer la conexion con postgres
+require('./db.js'); 
 
-const server = express(); // mio: instancia de express a utilizar
+const server = express(); // instancia de express a utilizar
 
 server.name = 'API';
 
-server.use(express.urlencoded({ extended: true, limit: '50mb' })); // mio: aca cambie bodyParser por express porque esta deprecado
-server.use(express.json({ limit: '50mb' })); // mio: aca cambie bodyParser por express porque esta deprecado
+server.use(express.urlencoded({ extended: true, limit: '50mb' })); // cambie bodyParser por express porque esta deprecado
+server.use(express.json({ limit: '50mb' })); // cambie bodyParser por express porque esta deprecado
 server.use(cookieParser());
 server.use(morgan('dev'));
-server.use((req, res, next) => { // mio: todo esto es configuracion de cors
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from // mio: en caso de algun problema cambiamos http://localhost:3000 por *
+server.use((req, res, next) => { // todo esto es configuracion de cors
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from // En caso de algun problema cambiamos http://localhost:3000 por *
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
   next();
 });
 
-server.use('/', routes); // mio: el server va a usar en "/" las rutas traidas de './routes/index.js' // '/api'
+server.use('/', routes); // El server va a usar en "/" las rutas traidas de './routes/index.js' // '/api'
 
 
 
-// Error catching endware. // mio: esto captura errores
+// Error catching endware. 
 server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
@@ -35,4 +35,4 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   res.status(status).send(message);
 });
 
-module.exports = server; // mio: exportamos la instancia de express
+module.exports = server; // exporto la instancia de express

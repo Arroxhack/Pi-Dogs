@@ -42,7 +42,9 @@ export default function SearchBar() {
               name={e.name} 
               image={e.image} 
               temperament={e.temperament} 
-              weight={e.weight}/>)
+              min_weight={e.min_weight ? e.min_weight : 0} 
+              max_weight={e.max_weight ? e.max_weight: 0}
+              />)
           })
           : <div><h2>{breed}</h2></div>}
       </form> 

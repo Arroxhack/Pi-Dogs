@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { Dog, Temperament, Breed } = require('../db');
+const {Breed} = require('../db');
 
 
 router.post("/", async (req, res, next) => { // /dog
@@ -13,7 +13,7 @@ router.post("/", async (req, res, next) => { // /dog
             })
         }
         if(temperament){
-            await newBreed.addTemperaments(temperament)
+            await newBreed.addTemperaments(temperament) // chequear para cuando venga mas de uno
             }
         res.json(newBreed)
     }catch(error){

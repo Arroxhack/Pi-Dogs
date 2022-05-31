@@ -1,64 +1,21 @@
 const { Router } = require('express');
 const router = Router();
-const { Dog, Temperament, Breed } = require('../db');
+const {Temperament, Breed } = require('../db');
 const {Op} = require("sequelize");
 const axios = require("axios");
 
 const api_key = "d0ca73ad-ed44-4042-800e-7e678dc1959d"
 
-// 1:18:15 filtro ascendetne y descendente
-
 
 router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o razaCreada
     const {name} = req.query;
-    if(name){
-            const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
-            const promiseDbDogs = Breed.findAll(
-                {where: {name: {
-                    [Op.iLike]: `%${name}%`
-                }},
-                include: Temperament,
-                raw: true, // para poder hacer console.log
-                nest:true  // para que no se me aniden mas de un temperamento
-                }
-            )
-            Promise.all([
-                promiseApiDogs,
-                promiseDbDogs
-            ])
-                .then((response) => {
-                    const [apiDogs, dbDogs] = response
-                    let dogsWithName = []
-                    apiDogs.data.forEach(e => {
-                        if(e.name.toLowerCase().includes(name.toLowerCase())){
-                            dogsWithName.push({
-                                id: e.id,
-                                image: e.image.url,
-                                name: e.name,
-                                temperament: e.temperament,
-                                weight: e.weight.metric
-                            })
-                        }
-                    })
-                    dbDogs.forEach(e => {
-                            dogsWithName.push({
-                                id: e.id,
-                                name: e.name,
-                                temperament: e.temperaments.name,
-                                weight: e.weight
-                            })
-                    })
-                // console.log(apiDogs.data)
-                // console.log(dbDogs)
-                return res.json(dogsWithName.length > 0 ? dogsWithName : "No contamos con esa Raza")
-                })
-                .catch(error => {
-                    return next(error)
-                })
-    }
     if(!name){
         const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
-        const promiseDbDogs = Breed.findAll({include: Temperament})
+        const promiseDbDogs = Breed.findAll(
+            {include: Temperament,
+            raw: true, // para poder hacer console.log
+            nest:true  // para que no se me aniden mas de un temperamento
+            })
         Promise.all([
             promiseApiDogs,
             promiseDbDogs
@@ -66,44 +23,82 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
         .then((response) => {
             const [apiDogs, dbDogs] = response
             let allDogs = []
-            apiDogs.data.forEach(e => {
+            apiDogs.data.forEach(dog => {
                 allDogs.push({
-                    id: e.id,
-                    image: e.image.url,
-                    name: e.name,
-                    temperament: e.temperament,
-                    weight: e.weight.metric
+                    id: dog.id,
+                    image: dog.image.url,
+                    name: dog.name,
+                    temperament: dog.temperament,
+                    min_weight: Number(dog.weight.metric.split(" - ")[0]),
+                    max_weight: Number(dog.weight.metric.split(" - ")[1])
                 })
             })
-            dbDogs.forEach(e => {
+            dbDogs.forEach(dog => {
                 allDogs.push({
-                    id: e.id,
-                    name: e.name,
-                    temperament: e.temperaments[0].name,
-                    weight: e.weight
+                    id: dog.id,
+                    name: dog.name,
+                    temperament: dog.temperaments.name,
+                    min_weight: dog.weight,
+                    max_weight: dog.weight
                 })
             })
+        // console.log(apiDogs.data)
+        // console.log(dbDogs)
         return res.json(allDogs)
         })
         .catch(error => {
             return next(error)
-        })
-        
+        })    
     }
+    if(name){
+        const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
+        const promiseDbDogs = Breed.findAll(
+            {where: {name: {
+                [Op.iLike]: `%${name}%`
+            }},
+            include: Temperament,
+            raw: true, // para poder hacer console.log
+            nest:true  // para que no se me aniden mas de un temperamento
+            }
+        )
+        Promise.all([
+            promiseApiDogs,
+            promiseDbDogs
+        ])
+            .then((response) => {
+                const [apiDogs, dbDogs] = response
+                let dogsWithName = []
+                apiDogs.data.forEach(dog => {
+                    if(dog.name.toLowerCase().includes(name.toLowerCase())){
+                        dogsWithName.push({
+                            id: dog.id,
+                            image: dog.image.url,
+                            name: dog.name,
+                            temperament: dog.temperament,
+                            min_weight: Number(dog.weight.metric.split(" - ")[0]),
+                            max_weight: Number(dog.weight.metric.split(" - ")[1])
+                        })
+                    }
+                })
+                dbDogs.forEach(dog => {
+                        dogsWithName.push({
+                            id: dog.id,
+                            name: dog.name,
+                            temperament: dog.temperaments.name,
+                            min_weight: dog.weight,
+                            max_weight: dog.weight
+                        })
+                })
+            // console.log(apiDogs.data)
+            // console.log(dbDogs)
+            return res.json(dogsWithName.length > 0 ? dogsWithName : "No contamos con esa Raza")
+            })
+            .catch(error => {
+                return next(error)
+            })
+}
 })
 
-/* 
-[ ] GET /dogs:
-Obtener un listado de las razas de perro
-Debe devolver solo los datos necesarios para la ruta principal
-[ ] GET /dogs?name="...":
-Obtener un listado de las razas de perro que contengan la palabra ingresada como query parameter
-Si no existe ninguna raza de perro mostrar un mensaje adecuado
-Imagen
-Nombre
-Temperamento
-Peso
-*/
 
 router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // primero hago la busqueda en mi base de datos
     const {idBreed} = req.params;
@@ -120,7 +115,8 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                 name: myBreed.name,
                 temperament: myBreed.temperaments.name,
                 height: myBreed.height,
-                weight: myBreed.weight,
+                min_weight: myBreed.weight,
+                max_weight: myBreed.weight,
                 life_span: myBreed.life_span ? myBreed.life_span : null
                 } 
             )
@@ -140,7 +136,8 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                     name: e.name,
                     temperament: e.temperament,
                     height: e.height.metric,
-                    weight: e.weight.metric,
+                    min_weight: Number(e.weight.metric.split(" - ")[0]),
+                    max_weight: Number(e.weight.metric.split(" - ")[1]),
                     life_span: e.life_span
                 };
                 return newObj;

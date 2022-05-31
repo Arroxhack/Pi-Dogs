@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const router = Router();
-const { Dog, Temperament, Breed } = require('../db');
+const {Temperament} = require('../db');
 const axios = require("axios");
 
 const api_key = "d0ca73ad-ed44-4042-800e-7e678dc1959d"
@@ -31,12 +31,11 @@ router.get("/", async(req, res, next) => { // /temperament
             )
         })
         temperamentsDb = await Temperament.findAll();    
-        console.log(temperamentsDb.length)    
+        // console.log(temperamentsDb.length)    
         return res.json(temperamentsDb)
-    
-       
+   
     } catch (error) {
-        next(error)
+       return next(error)
     }
 }) 
 
@@ -46,18 +45,6 @@ Obtener todos los temperamentos posibles
 En una primera instancia deberán obtenerlos desde la API externa y guardarlos en su propia base de datos y luego ya utilizarlos desde allí
 */
 
-
-router.post("/", async(req, res, next) => {
-    const {name} = req.body;
-    try{
-        const newTemperament = await Temperament.create({
-            name
-        })
-        res.json(newTemperament)
-    }catch(e){
-        res.send(e)
-    }
-})
 
 
 

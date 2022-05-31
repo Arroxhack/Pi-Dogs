@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAllBreeds} from "../store/actions/index"; //importo mi action creator para poder ejecutarlo al hacer click o lo que quiera
 import Pagination from "./Pagination";
 import BreedCard from "./BreedCard";
+import Order from "./Order";
 
 export default function Breeds(){
     const dispatch = useDispatch(); // con el useDispatch transformo la funcion action creator en dispatcher para que se pueda conectar al reducer
@@ -15,7 +16,7 @@ export default function Breeds(){
     // Get current breed
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [breedsPerPage, setBreedsPerPage] = useState(8);
+    const [breedsPerPage] = useState(8);
 
     //Change page
     function paginate(pageNumber){
@@ -29,20 +30,22 @@ export default function Breeds(){
         setLoading(false);
     }, [dispatch]) 
 
-    const indexOfLastBreed = currentPage * breedsPerPage; // var = 1 *8 = 8
-    const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // var = 8 - 8 = 0
-    const currentBreeds = breeds.slice(indexOfFirstBreed, indexOfLastBreed); // 150 slice(inicio 0, final 8)
+    const indexOfLastBreed = currentPage * breedsPerPage; // var = 1 *8 = 8 // 3 * 8 = 24
+    const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // var = 8 - 8 = 0 // 24 - 8 = 16
+    const currentBreeds = breeds.slice(indexOfFirstBreed, indexOfLastBreed); // 150 slice(inicio 0, final 8) // del 16 al 24
 
     return(
         <div>
+            <Order/>
             {currentBreeds && currentBreeds.map(breed => {
                 // if(e.id.length > 8){
                     return(
                         <BreedCard key={breed.id} 
                         name={breed.name} 
                         image={breed.image} 
-                        temperament={breed.temperament} 
-                        weight={breed.weight}
+                        temperament={breed.temperament}
+                        min_weight={breed.min_weight ? breed.min_weight : 0} 
+                        max_weight={breed.max_weight ? breed.max_weight : 0}
                         loading={loading}
                         />
                     )
@@ -50,7 +53,7 @@ export default function Breeds(){
             <Pagination 
             breedsPerPage={breedsPerPage} 
             totalBreeds={breeds.length} 
-            paginate={paginate}
+            paginate={paginate} 
             />
         </div>
     )

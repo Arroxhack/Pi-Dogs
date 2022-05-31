@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-export default function BreedCard({loading, name, image, temperament, min_weight, max_weight}){
+export default function BreedDetail({loading, name, image, temperament, min_weight, max_weight, min_height, max_height,life_span}){
+    const [breedId, setBreedId] = useState(null)
     if(loading){
         return(
             <h2>Loading...</h2>

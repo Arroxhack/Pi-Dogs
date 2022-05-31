@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const GET_BREEDS = "GET_BREEDS";
+export const SORT = "SORT";
 
 const PATH = "http://localhost:3001"
 
@@ -17,6 +18,13 @@ export function getAllBreeds(){ // action creators
             })
     }
 } 
+
+export function sort(order){
+    return {
+        type: SORT,
+        payload: order
+    }
+}
 
 export function searchBreed(){
 

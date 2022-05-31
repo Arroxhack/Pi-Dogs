@@ -5,7 +5,7 @@ const dogRoute = require("./dog");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
-// mio: aca separamos en rutas y controladores
+// Separamos en rutas y controladores
 
 
 const router = Router();
