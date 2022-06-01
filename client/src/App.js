@@ -5,6 +5,7 @@ import Home from './components/Home';
 // import SearchBar from './components/SearchBar';
 import LandingPage from './components/LandingPage';
 import BreedDetail from './components/BreedDetail';
+import Form from './components/Form';
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
 
       <Route exact path="/home">
         <Home/>
-        {/* <SearchBar/>
-        <Breeds/> */}
       </Route> 
+
+      <Route exact path="/home/createDog">
+        <Form/>
+      </Route>
       
       <Route exact path="/breed/:id">
         <BreedDetail/>

@@ -1,7 +1,7 @@
 import reducer from "./reducer";
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk"; // este es un middleware // Redux Thunk is a middleware that lets you call action creators that return a function instead of an action object.
-import {composeWithDevTools} from "redux-devtools-extension";
+import {composeWithDevTools} from "redux-devtools-extension"; //libreria que importo que tiene un metodo para activar las devtools sin chorizo
 
 const store = createStore(
     reducer,

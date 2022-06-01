@@ -28,7 +28,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     id: dog.id,
                     image: dog.image.url,
                     name: dog.name,
-                    temperament: dog.temperament,
+                    temperament: dog.temperament || "No tiene temperamentos",
                     min_weight: Number(dog.weight.metric.split(" - ")[0]),
                     max_weight: Number(dog.weight.metric.split(" - ")[1])
                 })
@@ -74,7 +74,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                             id: dog.id,
                             image: dog.image.url,
                             name: dog.name,
-                            temperament: dog.temperament,
+                            temperament: dog.temperament || "No tiene temperamentos",
                             min_weight: Number(dog.weight.metric.split(" - ")[0]),
                             max_weight: Number(dog.weight.metric.split(" - ")[1])
                         })
@@ -134,7 +134,7 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                     id: e.id,
                     image: e.image.url,
                     name: e.name,
-                    temperament: e.temperament,
+                    temperament: e.temperament || "No tiene temperamentos",
                     height: e.height.metric,
                     min_weight: Number(e.weight.metric.split(" - ")[0]),
                     max_weight: Number(e.weight.metric.split(" - ")[1]),

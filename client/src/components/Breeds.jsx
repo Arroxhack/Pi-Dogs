@@ -3,10 +3,11 @@
 import React from "react";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllBreeds} from "../store/actions/index"; //importo mi action creator para poder ejecutarlo al hacer click o lo que quiera
+import {getAllBreeds, getAllTemperaments} from "../store/actions/index"; //importo mi action creator para poder ejecutarlo al hacer click o lo que quiera
 import Pagination from "./Pagination";
 import BreedCard from "./BreedCard";
 import Order from "./Order";
+import Filter from "./Filter";
 
 export default function Breeds(){
     const dispatch = useDispatch(); // con el useDispatch transformo la funcion action creator en dispatcher para que se pueda conectar al reducer
@@ -23,12 +24,14 @@ export default function Breeds(){
         setCurrentPage(pageNumber)
     } 
 
-    
+    console.log(breeds);
+
     useEffect(() => { // al montarse se ejecuta getAllBreeds()
         setLoading(true);
         dispatch(getAllBreeds())
+        dispatch(getAllTemperaments())
         setLoading(false);
-    }, [dispatch]) 
+    }, [dispatch]) // Este useEffect se ejecuta al montarse y si la dependencia dispatch cambio.
 
     const indexOfLastBreed = currentPage * breedsPerPage; // var = 1 *8 = 8 // 3 * 8 = 24
     const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // var = 8 - 8 = 0 // 24 - 8 = 16
@@ -37,6 +40,7 @@ export default function Breeds(){
     return(
         <div>
             <Order/>
+            <Filter/>
             {currentBreeds && currentBreeds.map(breed => {
                 // if(e.id.length > 8){
                     return(
