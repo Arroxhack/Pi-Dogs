@@ -37,7 +37,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                 allDogs.push({
                     id: dog.id,
                     name: dog.name,
-                    temperament: dog.temperaments.name,
+                    temperament: dog.temperaments.name || "No tiene temperamentos",
                     min_weight: dog.weight,
                     max_weight: dog.weight
                 })
@@ -84,7 +84,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                         dogsWithName.push({
                             id: dog.id,
                             name: dog.name,
-                            temperament: dog.temperaments.name,
+                            temperament: dog.temperaments.name || "No tiene temperamentos",
                             min_weight: dog.weight,
                             max_weight: dog.weight
                         })
@@ -109,16 +109,18 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                 raw: true,
                 nest:true
             })
-            const myBreedDetail = Object.assign({},
-                {
+            const myBreedDetail = Object.assign([{}],
+                [{
                 id: myBreed.id,
                 name: myBreed.name,
-                temperament: myBreed.temperaments.name,
-                height: myBreed.height,
+                temperament: myBreed.temperaments.name || "No tiene temperamentos",
                 min_weight: myBreed.weight,
                 max_weight: myBreed.weight,
-                life_span: myBreed.life_span ? myBreed.life_span : null
-                } 
+                min_height: myBreed.height,
+                max_height: myBreed.height,
+                min_life_span: myBreed.life_span ? myBreed.life_span : null,
+                max_life_span: myBreed.life_span ? myBreed.life_span : null    
+                }] 
             )
             return res.json(myBreedDetail ? myBreedDetail : "El id ingresado no corresponde a una raza")
         }catch(error) {
@@ -135,10 +137,12 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                     image: e.image.url,
                     name: e.name,
                     temperament: e.temperament || "No tiene temperamentos",
-                    height: e.height.metric,
                     min_weight: Number(e.weight.metric.split(" - ")[0]),
                     max_weight: Number(e.weight.metric.split(" - ")[1]),
-                    life_span: e.life_span
+                    min_height: Number(e.height.metric.split(" - ")[0]),
+                    max_height: Number(e.height.metric.split(" - ")[1]),
+                    min_life_span: Number(e.life_span.split(" - ")[0]),
+                    max_life_span: Number(e.life_span.split(" ")[2]),
                 };
                 return newObj;
             })

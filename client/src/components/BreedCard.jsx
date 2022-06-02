@@ -1,13 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-export default function BreedCard({loading, id, name, image, temperament, min_weight, max_weight}){
-    if(loading){
-        return(
-            <h2>Loading...</h2>
-        )    
-    }
-    
+export default function BreedCard({ id, name, image, temperament, min_weight, max_weight}){
     return(
         <NavLink exact to={`/breedDetail/${id}`} >
             <div>   

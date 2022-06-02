@@ -15,7 +15,6 @@ export default function Breeds(){
     //console.log(breeds)
 
     // Get current breed
-    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [breedsPerPage] = useState(8);
 
@@ -27,21 +26,20 @@ export default function Breeds(){
     // console.log(breeds);
 
     useEffect(() => { // al montarse se ejecuta getAllBreeds()
-        setLoading(true);
         dispatch(getAllBreeds())
         dispatch(getAllTemperaments())
-        setLoading(false);
     }, [dispatch]) // Este useEffect se ejecuta al montarse y si la dependencia dispatch cambio.
 
     const indexOfLastBreed = currentPage * breedsPerPage; // var = 1 *8 = 8 // 3 * 8 = 24
     const indexOfFirstBreed = indexOfLastBreed - breedsPerPage; // var = 8 - 8 = 0 // 24 - 8 = 16
     const currentBreeds = breeds.slice(indexOfFirstBreed, indexOfLastBreed); // 150 slice(inicio 0, final 8) // del 16 al 24
 
+    if(currentBreeds.length === 0) {return(<h1>Loading...</h1>)} 
     return(
         <div>
             <Order/>
             <Filter breeds={breeds}/>
-            {currentBreeds && currentBreeds.map(breed => {
+            {currentBreeds.map(breed => {
                 // if(e.id.length > 8){
                     return(
                         <BreedCard key={breed.id}
@@ -51,7 +49,6 @@ export default function Breeds(){
                         temperament={breed.temperament}
                         min_weight={breed.min_weight ? breed.min_weight : 0} 
                         max_weight={breed.max_weight ? breed.max_weight : 0}
-                        loading={loading}
                         />
                     )
             })}

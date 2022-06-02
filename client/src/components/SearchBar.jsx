@@ -36,6 +36,7 @@ export default function SearchBar() {
         {typeof breed !== "string" 
           ? breed.map(e => {
             return (<BreedCard key={e.id} 
+              id={e.id}
               name={e.name} 
               image={e.image} 
               temperament={e.temperament} 
