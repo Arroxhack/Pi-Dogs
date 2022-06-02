@@ -23,7 +23,7 @@ function App() {
         <Form/>
       </Route>
       
-      <Route exact path="/breed/:id">
+      <Route exact path="/breedDetail/:id">
         <BreedDetail/>
       </Route>
     </div>

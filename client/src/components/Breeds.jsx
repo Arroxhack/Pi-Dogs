@@ -24,7 +24,7 @@ export default function Breeds(){
         setCurrentPage(pageNumber)
     } 
 
-    console.log(breeds);
+    // console.log(breeds);
 
     useEffect(() => { // al montarse se ejecuta getAllBreeds()
         setLoading(true);
@@ -40,11 +40,12 @@ export default function Breeds(){
     return(
         <div>
             <Order/>
-            <Filter/>
+            <Filter breeds={breeds}/>
             {currentBreeds && currentBreeds.map(breed => {
                 // if(e.id.length > 8){
                     return(
-                        <BreedCard key={breed.id} 
+                        <BreedCard key={breed.id}
+                        id={breed.id} 
                         name={breed.name} 
                         image={breed.image} 
                         temperament={breed.temperament}

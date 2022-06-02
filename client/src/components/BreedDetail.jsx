@@ -1,19 +1,57 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import DetailCard from './DetailCard';
 
-export default function BreedDetail({loading, name, image, temperament, min_weight, max_weight, min_height, max_height,life_span}){
-    const [breedId, setBreedId] = useState(null)
-    if(loading){
-        return(
-            <h2>Loading...</h2>
-        )    
+export default function BreedDetail(){
+
+    const {id} = useParams();
+    const [dogId, setDogId] = useState(null);
+    const [loading, setLoading] = useState(false)
+
+    // useEffect(async() => { // al montarse se ejecuta getAllBreeds()
+    //     const response = await axios.get(`http://localhost:3001/dogs/${id}`)
+    //     setDogId(response.data)
+    // },[])
+
+    useEffect(() => { // al montarse se ejecuta getAllBreeds()
+        const axiosData = async() => {
+        const response = await axios.get(`http://localhost:3001/dogs/${id}`)
+        setDogId(response.data)
+        setLoading(true)
     }
+    axiosData()
+    .catch(e => console.log(e))
+    },[])
+
+    console.log(dogId)
+    console.log(id)
+
     return(
         <div>
-            <h3>{name}</h3>
-            <img src={image} alt= {`Raza Creada ${name}`} />
-            <h4>{temperament}</h4>
-            <h4>{min_weight === 0 ? `Peso min: desconocido` : `Peso min: ${min_weight} kg`}</h4>
-            <h4>{max_weight === 0 ? `Peso max: desconocido` : `Peso max: ${max_weight} kg`}</h4>
+            {dogId ? <DetailCard dogId={dogId[0]}/> : <h1>Loading...</h1> }
         </div>
     ) 
 }
+
+/* 
+height: "23 - 29"
+id: 1
+image: "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg"
+life_span: "10 - 12 years"
+max_weight: 6
+min_weight: 3
+name: "Affenpinscher"
+temperament: "Stubborn, Curious, Playful
+*/
+
+
+/* 
+Ruta de detalle de raza de perro: debe contener
+
+[ ] Los campos mostrados en la ruta principal para cada raza (imagen, nombre y temperamento)
+[ ] Altura
+[ ] Peso
+[ ] Años de vida
+*/

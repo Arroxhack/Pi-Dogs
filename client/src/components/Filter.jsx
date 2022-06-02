@@ -4,10 +4,10 @@ import {useDispatch, useSelector} from "react-redux";
 import { getAllBreeds } from '../store/actions';
 import { filterTemperament, filterDbOrApiBreeds } from '../store/actions';
 
-export default function Filter() {
+export default function Filter({breeds}) {
     const dispatch = useDispatch();
     const temperaments = useSelector(state => state.temperaments);
-    const breeds = useSelector(state => state.noModificationBreeds);
+    // const breeds = useSelector(state => state.noModificationBreeds);
     // const filteredBreeds = useSelector(state => state.filteredBreeds);
     // const filteredTemperaments = useSelector(state => state.filteredTemperaments);
 
