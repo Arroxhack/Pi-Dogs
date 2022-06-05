@@ -13,8 +13,8 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
         const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
         const promiseDbDogs = Breed.findAll(
             {include: Temperament,
-            raw: true, // para poder hacer console.log
-            nest:true  // para que no se me aniden mas de un temperamento
+            // raw: true, // para poder hacer console.log
+            // nest:true  // para que no se me aniden mas de un temperamento
             })
         Promise.all([
             promiseApiDogs,
@@ -37,9 +37,10 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                 allDogs.push({
                     id: dog.id,
                     name: dog.name,
-                    temperament: dog.temperaments.name || "No tiene temperamentos",
-                    min_weight: dog.weight,
-                    max_weight: dog.weight
+                    temperament: dog.temperaments ? dog.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos",
+                    min_weight: dog.min_weight,
+                    max_weight: dog.max_weight,
+                    image: dog.image ? dog.image : null
                 })
             })
         // console.log(apiDogs.data)
@@ -57,8 +58,8 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                 [Op.iLike]: `%${name}%`
             }},
             include: Temperament,
-            raw: true, // para poder hacer console.log
-            nest:true  // para que no se me aniden mas de un temperamento
+            // raw: true, // para poder hacer console.log
+            // nest:true  // para que no se me aniden mas de un temperamento
             }
         )
         Promise.all([
@@ -84,14 +85,15 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                         dogsWithName.push({
                             id: dog.id,
                             name: dog.name,
-                            temperament: dog.temperaments.name || "No tiene temperamentos",
-                            min_weight: dog.weight,
-                            max_weight: dog.weight
+                            temperament: dog.temperaments ? dog.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos",
+                            min_weight: dog.min_weight,
+                            max_weight: dog.max_weight,
+                            image: dog.image ? dog.image : null,
                         })
                 })
             // console.log(apiDogs.data)
             // console.log(dbDogs)
-            return res.json(dogsWithName.length > 0 ? dogsWithName : "No contamos con esa Raza")
+            return res.json(dogsWithName.length > 0 ? dogsWithName : [{error:"No contamos con esa Raza"}])
             })
             .catch(error => {
                 return next(error)
@@ -105,21 +107,20 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
     if(idBreed.length > 8){
         try{
             const myBreed = await Breed.findByPk(idBreed,{
-                include: Temperament,
-                raw: true,
-                nest:true
+                include: Temperament
             })
             const myBreedDetail = Object.assign([{}],
                 [{
                 id: myBreed.id,
                 name: myBreed.name,
-                temperament: myBreed.temperaments.name || "No tiene temperamentos",
-                min_weight: myBreed.weight,
-                max_weight: myBreed.weight,
-                min_height: myBreed.height,
-                max_height: myBreed.height,
+                temperament: myBreed.temperaments ? myBreed.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos", 
+                min_weight: myBreed.min_weight,
+                max_weight: myBreed.max_weight,
+                min_height: myBreed.min_height,
+                max_height: myBreed.max_height,
                 min_life_span: myBreed.life_span ? myBreed.life_span : null,
-                max_life_span: myBreed.life_span ? myBreed.life_span : null    
+                max_life_span: myBreed.life_span ? myBreed.life_span : null,
+                image: myBreed.image ? myBreed.image : null    
                 }] 
             )
             return res.json(myBreedDetail ? myBreedDetail : "El id ingresado no corresponde a una raza")

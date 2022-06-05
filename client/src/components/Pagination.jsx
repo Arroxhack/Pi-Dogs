@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Pagination({breedsPerPage, totalBreeds, paginate}) { // 8 // 150 // setCurrentPage(pageNumber)
+export default function Pagination({breedsPerPage, totalBreeds, paginate}) { // 8 // 175 // setCurrentPage(pageNumber)
     const pageNumbers = [];
 
     for(let i = 1; i <= Math.ceil(totalBreeds/breedsPerPage); i++){ //175 / 8 = 21 // ceil, o sea que si da 21,7 es 22

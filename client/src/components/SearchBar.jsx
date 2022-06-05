@@ -1,29 +1,21 @@
 import React from 'react';
 import { useState, useEffect } from 'react' ;
-import axios from 'axios';
-import BreedCard from "./BreedCard";
-
+import { searchBreedName } from '../store/actions';
+import { useDispatch } from 'react-redux';
 
 export default function SearchBar() {
     const [search, setSearch] = useState("")
-    const [breed, setBreed] = useState([])
 
-    useEffect(() => { // al montarse se ejecuta getAllBreeds()
-      (async() => {
-        if(search === ""){
-          setBreed("")
-        }
-        if(search){
-          const response = await axios.get(`http://localhost:3001/dogs?name=${search}`)
-          setBreed(response.data)
-          console.log(response.data)
-        }
-      })()
-  }, [search]) 
+    const dispatch = useDispatch()
 
-    let onInputChange = async(e) => { // seteo mi estado a lo que el usuario tipea
+    let onInputChange = (e) => { // seteo mi estado a lo que el usuario tipea
+        e.preventDefault(e);
         setSearch(e.target.value)
     }
+
+    useEffect(() => {
+      dispatch(searchBreedName(search))
+    }, [search, dispatch])
 
   return (
     <div>
@@ -33,18 +25,6 @@ export default function SearchBar() {
         placeholder='Ingrese una raza de perro'
         value = {search}
         />
-        {typeof breed !== "string" 
-          ? breed.map(e => {
-            return (<BreedCard key={e.id} 
-              id={e.id}
-              name={e.name} 
-              image={e.image} 
-              temperament={e.temperament} 
-              min_weight={e.min_weight ? e.min_weight : 0} 
-              max_weight={e.max_weight ? e.max_weight: 0}
-              />)
-          })
-          : <div><h2>{breed}</h2></div>}
     </div>
   )
 }

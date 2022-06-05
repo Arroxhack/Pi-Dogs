@@ -13,16 +13,27 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    height: {
+    min_height: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    weight: {
+    max_height: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    min_weight: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    },
+    max_weight: {
     type: DataTypes.INTEGER,
     allowNull: false,
     },
     life_span: {
         type: DataTypes.INTEGER,
+    },
+    image: {
+      type: DataTypes.STRING,
     }  
   });
 };

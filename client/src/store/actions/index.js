@@ -6,6 +6,8 @@ export const SORT = "SORT";
 export const GET_TEMPERAMENTS = "GET_TEMPERAMENTS";
 export const FILTER_TEMPERAMENT = "FILTER_TEMPERAMENT";
 export const FILTER_DB_OR_API_BREED = "FILTER_DB_OR_API_BREED";
+export const SEARCH_BREED_NAME = "SEARCH_BREED_NAME";
+export const POST_NEW_BREED = "POST_NEW_BREED";
 
 const PATH = "http://localhost:3001"
 
@@ -24,8 +26,8 @@ const PATH = "http://localhost:3001"
 // } 
 
 export function getAllBreeds(){
-    try{
-        return async function(dispatch){
+    return async function(dispatch){
+        try{
             let breeds = await axios.get(`${PATH}/dogs`)
             let breedsData = breeds.data
             return dispatch({
@@ -33,15 +35,16 @@ export function getAllBreeds(){
                 payload: breedsData
             })
         } 
-    }catch(error){
-        console.log(error)
+        catch(error){
+            console.log(error)
+        }
     }
 }
 
 
 export function getAllTemperaments(){
-    try{
-        return async function(dispatch){
+    return async function(dispatch){
+        try{
             let temperaments = await axios.get(`${PATH}/temperament`)
             let temperamentsData = temperaments.data
             return dispatch({
@@ -49,8 +52,24 @@ export function getAllTemperaments(){
                 payload: temperamentsData
             })
         } 
-    }catch(error){
-        console.log(error)
+        catch(error){
+            console.log(error)
+        }
+    }
+}
+
+export function searchBreedName(name){
+    return async function (dispatch){
+        try {
+            let breed = await axios.get(`${PATH}/dogs?name=${name}`)
+            let breedData = breed.data
+            return dispatch({
+                type: SEARCH_BREED_NAME,
+                payload: breedData
+            })
+        }catch(error){
+            console.log(error)
+        }
     }
 }
 
@@ -75,23 +94,21 @@ export function filterDbOrApiBreeds(name){
     }
 }
 
-export function searchBreed(){
-
+export function postNewBreed(newBreed){
+    return async function (dispatch){
+        try {
+            let newBreedCreated = await axios.post(`${PATH}/dog`, newBreed)
+            let newBreedCreatedData = newBreedCreated.data
+            return newBreedCreatedData
+        } 
+        catch (error) {
+            console.log(error)
+        }
+    }
 }
 
-// export function getDogBreed(breed){
-//     return function (dispatch){ // se retorna una funcion con dispatch como argumento
-//         return axios.get(`${PATH}/dogs`)
-//             .then(breeds => breeds.data)
-//             .then(breedsData => dispatch({
-//                 type: GET_BREEDS,
-//                  payload: breedsData
-//             }))
-//             .catch((error) => {
-//                 console.log(error) // si no puedo despatchar una action con type por ej ERROR_GET_BREEDS que genere un componente por unos segundos
-//             })
-//     }
-// }
+
+
 
 
 

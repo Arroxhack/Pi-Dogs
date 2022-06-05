@@ -8,7 +8,6 @@ export default function BreedDetail(){
 
     const {id} = useParams();
     const [dogId, setDogId] = useState(null);
-    const [loading, setLoading] = useState(false)
 
     // useEffect(async() => { // al montarse se ejecuta getAllBreeds()
     //     const response = await axios.get(`http://localhost:3001/dogs/${id}`)
@@ -19,14 +18,10 @@ export default function BreedDetail(){
         const axiosData = async() => {
         const response = await axios.get(`http://localhost:3001/dogs/${id}`)
         setDogId(response.data)
-        setLoading(true)
     }
     axiosData()
     .catch(e => console.log(e))
-    },[])
-
-    console.log(dogId)
-    console.log(id)
+    },[id])
 
     return(
         <div>

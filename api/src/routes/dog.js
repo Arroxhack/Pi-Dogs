@@ -4,18 +4,19 @@ const {Breed} = require('../db');
 
 
 router.post("/", async (req, res, next) => { // /dog
-    const {name, height, weight, life_span, temperament} = req.body; // temperament es uno o mas de un id
+    const {name, min_height, max_height, min_weight, max_weight, life_span, image, temperament} = req.body; // temperament es uno o mas de un id
     let newBreed = {}
     try{
-        if(name, height, weight){
+        if(name, min_height, max_height, min_weight, max_weight){
             newBreed = await Breed.create({
-                name, height, weight, life_span: life_span ? life_span : null
+                name, min_height, max_height, min_weight, max_weight, life_span: life_span ? life_span : null, image: image ? image : null 
             })
         }
         if(temperament){
             await newBreed.addTemperaments(temperament) // chequear para cuando venga mas de uno
+            return res.json(newBreed)
             }
-        res.json(newBreed)
+            res.json(newBreed)
     }catch(error){
         next(error)
     }

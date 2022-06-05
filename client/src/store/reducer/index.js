@@ -1,62 +1,64 @@
-import {GET_BREEDS, SORT, GET_TEMPERAMENTS, FILTER_TEMPERAMENT, FILTER_DB_OR_API_BREED} from "../actions"
+import {GET_BREEDS, SORT, GET_TEMPERAMENTS, FILTER_TEMPERAMENT, FILTER_DB_OR_API_BREED, SEARCH_BREED_NAME, POST_NEW_BREED} from "../actions"
 
 
 const initialState = {
     breeds: [],
     temperaments: [],
     noModificationBreeds: [],
-    filteredBreeds: [],
-    filteredTemperaments: [],
 }
 
 export default function reducer(state=initialState, action){ // action = {type, payload}
     switch(action.type){
+
         case GET_BREEDS: 
             return{
                 ...state,
                 breeds: action.payload,
-                noModificationBreeds: action.payload,
-                filteredBreeds: action.payload
+                noModificationBreeds: action.payload
             }
 
-
+        case SEARCH_BREED_NAME:
+            return{
+                ...state,
+                breeds: action.payload    
+            }
+            
         case GET_TEMPERAMENTS:
             return{
                 ...state,
-                temperaments: action.payload,
-                filteredTemperaments: action.payload
+                temperaments: action.payload
+            }
+
+        case POST_NEW_BREED:
+            return{
+                ...state    
             }
 
 
         case FILTER_TEMPERAMENT: //payload: "Stubborn" 
-            if(action.payload === ""){
-                return {
-                    ...state,
-                    breeds: state.noModificationBreeds
-                }
-            }
-            let filteredBreedsTemperament = [...state.breeds]
-            filteredBreedsTemperament = filteredBreedsTemperament.filter(e => e.temperament.includes(action.payload)); 
+            let allBreeds = state.noModificationBreeds
+            let filteredBreedsTemperament = action.payload === "" ? allBreeds : allBreeds.filter(e => e.temperament.includes(action.payload)); 
             return{
                 ...state,
-                breeds: filteredBreedsTemperament
+                breeds: filteredBreedsTemperament,
+                filteredBreeds: filteredBreedsTemperament
             }
 
 
-        case FILTER_DB_OR_API_BREED: // payload: "Affenpinscher"
+        case FILTER_DB_OR_API_BREED: // payload: "Api"
             if(action.payload === ""){
                 return {
                     ...state,
                     breeds: state.noModificationBreeds
                 }
              }
-            let filteredBreedsDbApi = [...state.breeds]
-            filteredBreedsDbApi = filteredBreedsDbApi.filter(e => e.name.includes(action.payload))
-            return{
-                ...state,
-                breeds: filteredBreedsDbApi
-            }
-
+                let allBreeds2 = state.noModificationBreeds
+                let filteredBreedsDbApi = action.payload === "Api" ? allBreeds2.filter(e => typeof e.id === "number") : allBreeds2.filter(e => typeof e.id === "string")
+                console.log(filteredBreedsDbApi)
+                return{
+                    ...state,
+                    breeds: filteredBreedsDbApi.length > 0 ? filteredBreedsDbApi : [{error: "No hay razas creadas"}]
+                }
 
         case SORT:  //payload: "ascendente"
             let orderedBreeds = [...state.breeds]
