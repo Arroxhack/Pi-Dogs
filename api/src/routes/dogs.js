@@ -38,8 +38,8 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     id: dog.id,
                     name: dog.name,
                     temperament: dog.temperaments ? dog.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos",
-                    min_weight: dog.min_weight,
-                    max_weight: dog.max_weight,
+                    min_weight: Number(dog.weight.split(" - ")[0]),
+                    max_weight: Number(dog.weight.split(" - ")[1]),
                     image: dog.image ? dog.image : null
                 })
             })
@@ -86,8 +86,8 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                             id: dog.id,
                             name: dog.name,
                             temperament: dog.temperaments ? dog.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos",
-                            min_weight: dog.min_weight,
-                            max_weight: dog.max_weight,
+                            min_weight: Number(dog.weight.split(" - ")[0]),
+                            max_weight: Number(dog.weight.split(" - ")[1]),
                             image: dog.image ? dog.image : null,
                         })
                 })
@@ -114,10 +114,10 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
                 id: myBreed.id,
                 name: myBreed.name,
                 temperament: myBreed.temperaments ? myBreed.temperaments.map(e => e.name).join(", ") : "No tiene temperamentos", 
-                min_weight: myBreed.min_weight,
-                max_weight: myBreed.max_weight,
-                min_height: myBreed.min_height,
-                max_height: myBreed.max_height,
+                min_weight: Number(myBreed.weight.split(" - ")[0]),
+                max_weight: Number(myBreed.weight.split(" - ")[1]),
+                min_height: Number(myBreed.height.split(" - ")[0]),
+                max_height: Number(myBreed.height.split(" - ")[1]),
                 min_life_span: myBreed.life_span ? myBreed.life_span : null,
                 max_life_span: myBreed.life_span ? myBreed.life_span : null,
                 image: myBreed.image ? myBreed.image : null    
