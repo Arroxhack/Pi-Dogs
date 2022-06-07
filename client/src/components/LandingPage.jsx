@@ -1,12 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import styles from "./CSS/LandingPage.module.css"
+
 
 export default function LandingPage() {
   return (
-    <div>
-        <h4>LandingPage</h4>
-        <button>
-            <NavLink exact to="/home" >BRING THE DOGGIES!!!
+    <div className={styles.backgroundPicture}>
+        <button className={styles.button}>
+            <NavLink className={styles.navLink} exact to="/home" >BRING.. THE.. DOGGIES!
             </NavLink>
         </button>
         

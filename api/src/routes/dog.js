@@ -4,7 +4,7 @@ const {Breed} = require('../db');
 
 
 router.post("/", async (req, res, next) => { // /dog
-    const {name, min_height, max_height, min_weight, max_weight, life_span, image, temperament} = req.body; // temperament es uno o mas de un id
+    const {name, min_height, max_height, min_weight, max_weight, life_span, image, temperament} = req.body; 
     const height = min_height + " - " + max_height
     const weight = min_weight + " - " + max_weight
     let newBreed = {}
@@ -15,57 +15,14 @@ router.post("/", async (req, res, next) => { // /dog
             })
         }
         if(temperament){
-            await newBreed.addTemperaments(temperament) // chequear para cuando venga mas de uno
+            await newBreed.addTemperaments(temperament) 
             return res.json(newBreed)
             }
             res.json(newBreed)
     }catch(error){
         next(error)
     }
-}) // /dog
-
-
-/* 
-
-[ ] POST /dog:
-Recibe los datos recolectados desde el formulario controlado de la ruta de creación de raza de perro por body
-Crea una raza de perro en la base de datos
-
-Nombre
-Altura (Diferenciar entre altura mínima y máxima)
-Peso (Diferenciar entre peso mínimo y máximo)
-Años de vida
-Posibilidad de seleccionar/agregar uno o más temperamentos
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-router.get("/", async(req, res, next) => {
-    res.json(await Temperamento.findAll())
-})
-
-router.post("/", async(req, res, next) => {
-    const {nombre} = req.body;
-    try{
-        const newTemperament = await Temperamento.create({
-            nombre
-        })
-        res.json(newTemperament)
-    }catch(e){
-        res.send(e)
-    }
-})
-
-
+}) 
 
 
 module.exports = router;

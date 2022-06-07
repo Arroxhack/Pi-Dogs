@@ -1,6 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import { filterTemperament, filterDbOrApiBreeds } from '../store/actions';
+import styles from "./CSS/Filter.module.css"
 
 export default function Filter() {
     const dispatch = useDispatch();
@@ -15,25 +16,20 @@ export default function Filter() {
     }
 
     return (
-        <div>
-            <select name="select" onChange={onSelectTemperament}>
-                <option value="">Todos los temperamentos</option>
+        <div className={styles.bodyDivFilter}>
+            <div></div>
+            <select name="select" onChange={onSelectTemperament} className={styles.select}>
+                <option value="">All temperaments</option>
                 {temperaments.map(e => {
                     return <option key={e.id} value={e.name}>{e.name}</option>
                 })}
             </select>
-            <select name="select" onChange={onSelectDbOrApiBreed}>
-                <option value="">Todos los perros</option>
-                <option value="Api">Api</option>
-                <option value="Db">Db</option>
+            <select name="select" onChange={onSelectDbOrApiBreed} className={styles.select}>
+                <option value="">Db and Api breeds</option>
+                <option value="Api">Api breeds</option>
+                <option value="Db">Db breeds</option>
             </select>
       </div>
     )
 }
 
-
-/* 
-[ ] Botones/Opciones para filtrar por:
-Temperamento
-Raza existente (es decir las que vienen de la API) o agregada por nosotros (creadas mediante el form)
-*/

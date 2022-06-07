@@ -23,7 +23,7 @@ server.use((req, res, next) => { // todo esto es configuracion de cors
   next();
 });
 
-server.use('/', routes); // El server va a usar en "/" las rutas traidas de './routes/index.js' // '/api'
+server.use('/', routes); // El server va a usar en "/" las rutas traidas de './routes/index.js' 
 
 
 

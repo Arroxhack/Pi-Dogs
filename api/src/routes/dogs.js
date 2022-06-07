@@ -12,10 +12,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
     if(!name){
         const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
         const promiseDbDogs = Breed.findAll(
-            {include: Temperament,
-            // raw: true, // para poder hacer console.log
-            // nest:true  // para que no se me aniden mas de un temperamento
-            })
+            {include: Temperament})
         Promise.all([
             promiseApiDogs,
             promiseDbDogs
@@ -57,11 +54,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
             {where: {name: {
                 [Op.iLike]: `%${name}%`
             }},
-            include: Temperament,
-            // raw: true, // para poder hacer console.log
-            // nest:true  // para que no se me aniden mas de un temperamento
-            }
-        )
+            include: Temperament})
         Promise.all([
             promiseApiDogs,
             promiseDbDogs
@@ -98,11 +91,11 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
             .catch(error => {
                 return next(error)
             })
-}
+    }
 })
 
 
-router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // primero hago la busqueda en mi base de datos
+router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb 
     const {idBreed} = req.params;
     if(idBreed.length > 8){
         try{
@@ -154,18 +147,6 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb // pr
     }
 })
 
-/* 
-[ ] GET /dogs/{idRaza}:
-Obtener el detalle de una raza de perro en particular
-Debe traer solo los datos pedidos en la ruta de detalle de raza de perro
-Incluir los temperamentos asociados
-imagen
-nombre
-temperamento
-Altura
-Peso
-Años de vida
-*/
 
 
 module.exports = router;

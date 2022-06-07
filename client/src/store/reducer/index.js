@@ -57,7 +57,7 @@ export default function reducer(state=initialState, action){ // action = {type, 
                 console.log(filteredBreedsDbApi)
                 return{
                     ...state,
-                    breeds: filteredBreedsDbApi.length > 0 ? filteredBreedsDbApi : [{error: "No hay razas creadas"}]
+                    breeds: filteredBreedsDbApi.length > 0 ? filteredBreedsDbApi : [{error: "No created breeds yet"}]
                 }
 
         case SORT:  //payload: "ascendente"

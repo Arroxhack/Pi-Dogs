@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react' ;
 import { searchBreedName } from '../store/actions';
 import { useDispatch } from 'react-redux';
+import styles from "./CSS/SearchBar.module.css"
 
 export default function SearchBar() {
     const [search, setSearch] = useState("")
@@ -18,11 +19,12 @@ export default function SearchBar() {
     }, [search, dispatch])
 
   return (
-    <div>
-        <input  
+    <div className={styles.inputDiv}>
+        <input
+        className={styles.input}  
         type="text"  
         onChange={onInputChange} 
-        placeholder='Ingrese una raza de perro'
+        placeholder='Enter breed name'
         value = {search}
         />
     </div>

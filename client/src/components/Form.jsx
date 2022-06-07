@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { NavLink} from 'react-router-dom';
 import { postNewBreed, getAllTemperaments } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from "./CSS/Form.module.css"
 
 
 export default function Form() {
@@ -21,37 +22,37 @@ function validate(newBreed){
     let errors = {};
 
     if(!/^[a-zA-Z\s]*$/.test(newBreed.name)){
-        errors.name = "Completar este campo con caracteres alfabeticos"
+        errors.name = "Complete this field with alphabetic characters"
     }
 
     if(!/^[1-9][0-9]?$|^100$/.test(newBreed.min_height)){
-        errors.min_height = "Completar con un valor numerico entre 1 y 100 que no supere la altura maxima"
+        errors.min_height = "Complete with a number between 1 and 100 that does not exceed the maximum height"
     } 
     if(!/^[1-9][0-9]?$|^100$/.test(newBreed.max_height)){
-        errors.max_height = "Completar con un valor numerico entre 1 y 100 que supere la altura minima"
+        errors.max_height = "Complete with a number between 1 and 100 that is more than the minimum height"
     }
     if(parseInt(newBreed.min_height) > parseInt(newBreed.max_height)){
-        errors.min_height = "Completar con un valor numerico entre 1 y 100 que no supere la altura maxima"
-        errors.max_height = "Completar con un valor numerico entre 1 y 100 que supere la altura minima"
+        errors.min_height = "Complete with a number between 1 and 100 that does not exceed the maximum height"
+        errors.max_height = "Complete with a number between 1 and 100 that is more than the minimum height"
     }
 
     if(!/^[1-9][0-9]?$|^100$/.test(newBreed.min_weight)){
-        errors.min_weight = "Completar con un valor numerico entre 1 y 100 que no supere el peso maxima"
+        errors.min_weight = "Complete with a number between 1 and 100 that does not exceed the maximum weight"
     }
     if(!/^[1-9][0-9]?$|^100$/.test(newBreed.max_weight)){
-        errors.max_weight = "Completar con un valor numerico entre 1 y 100 que supere el peso maximo"
+        errors.max_weight = "Complete with a number between 1 and 100 that is more than the minimum weight"
     }
     if(parseInt(newBreed.min_weight) > parseInt(newBreed.max_weight)){
-        errors.min_weight = "Completar con un valor numerico entre 1 y 100 que no supere el peso maximo"
-        errors.max_weight = "Completar con un valor numerico entre 1 y 100 que supere el peso maximo"
+        errors.min_weight = "Complete with a number between 1 and 100 that does not exceed the maximum weight"
+        errors.max_weight = "Complete with a number between 1 and 100 that is more than the minimum weight"
     }
 
     if(newBreed.life_span && !/\b([1-9]|[12][0-9]|3[0])\b/.test(newBreed.life_span)){
-        errors.life_span = "Si desea completarlo, hacerlo con un valor numerico entre 1 y 30"
+        errors.life_span = "If completed, the number must be between 1 and 30"
     }
 
     if(newBreed.image && !/[(http(s)?):(www)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/.test(newBreed.image)){
-        errors.image = "Si desea completarlo, hacerlo con una url https valida. Ej:https://placedog.net/600/100"
+        errors.image = "If completed, use a valid https url. E.g.:https://placedog.net/600/100"
     }
 
     return errors
@@ -143,125 +144,122 @@ let submitDog = (e) => {
 
 
   return (
-    <div>           
-        <button>
-            <NavLink exact to="/home">Home</NavLink>
+    <div className={styles.body}>           
+        <button className={styles.homeButton}>
+            <NavLink className={styles.navLink} exact to="/home">Home</NavLink>
         </button>
-        <h2>Formulario de creacion de raza</h2>
-        <form onSubmit={submitDog}>
-            <div> *Raza:
-                <input  // SI o SI
-                type="text" 
-                placeholder='Raza'
-                value={newBreed.name}
-                name= "name"
-                onChange={onInputChange}/>
-                {errors.name && (
-                    <p style={{color:"red"}}>{errors.name}</p>
-                )}
-            </div>
-            <div> *Altura min:
-                <input // SI o SI
-                type="text"
-                placeholder='Altura min' 
-                value={newBreed.min_height}
-                name= "min_height"
-                onChange={onInputChange}/> 
-                {errors.min_height && (
-                    <p style={{color:"red"}}>{errors.min_height}</p>
-                )}
-                cm
-            </div>
-            <div>
-                *Altura max:
-                <input // SI o SI
-                type="text"
-                placeholder='Altura max' 
-                value={newBreed.max_height}
-                name= "max_height"
-                onChange={onInputChange}/>
-                {errors.max_height && (
-                    <p style={{color:"red"}}>{errors.max_height}</p>
-                )}
-                cm
-            </div>
-            <div> *Peso min:
-                <input // SI o SI
-                type="text"
-                placeholder='Peso min' 
-                value={newBreed.min_weight}
-                name= "min_weight"
-                onChange={onInputChange}/>
-                {errors.min_weight && (
-                    <p style={{color:"red"}}>{errors.min_weight}</p>
-                )}
-                kg
-            </div>
-            <div>
-                *Peso max: 
-                <input // SI o SI
-                type="text"
-                placeholder='Peso max' 
-                value={newBreed.max_weight}
-                name= "max_weight"
-                onChange={onInputChange}/>
-                {errors.max_weight && (
-                    <p style={{color:"red"}}>{errors.max_weight}</p>
-                )}
-                kg
-            </div>
-            <div> Años de vida:
-                <input 
-                type="text"
-                placeholder='AñosDeVida'
-                value={newBreed.life_span}
-                name="life_span"
-                onChange={onInputChange}/>
-                {errors.life_span && (
-                    <p style={{color:"red"}}>{errors.life_span}</p>
-                )} 
-            </div>
-            <div> Imagen:
-                <input 
-                type="text" 
-                placeholder='Imagen'
-                value={newBreed.image}
-                name="image"
-                onChange={onInputChange}/>
-                {errors.image && (
-                    <p style={{color:"red"}}>{errors.image}</p>
-                )} 
-            </div>
-            <div>
-                <select name="temperament" id="" onChange={onSelectChange}>
-                    <option value="">Selecciona los temperamentos</option>
-                    {temperaments.map(e => { 
-                        return <option key={e.id} value={`${e.id},${e.name}`}>{e.name}</option>
+        <h4 className={styles.h4}>Complete the form to create your own breed!</h4>
+        <div className={styles.formDiv}>
+            <form onSubmit={submitDog}>
+                <div> 
+                    <span>*Breed: </span>
+                    <input  // SI o SI
+                    type="text" 
+                    placeholder='Name your breed'
+                    value={newBreed.name}
+                    name= "name"
+                    onChange={onInputChange}/>
+                    {errors.name && (
+                        <p className={styles.errorP}>{errors.name}</p>
+                    )}
+                </div>
+                <div> 
+                    <span>*Min height: </span>
+                    <input // SI o SI
+                    type="text"
+                    placeholder='Altura min' 
+                    value={newBreed.min_height}
+                    name= "min_height"
+                    onChange={onInputChange}/>
+                    <span> cm</span> 
+                    {errors.min_height && (
+                        <p className={styles.errorP}>{errors.min_height}</p>
+                    )}
+                </div>
+                <div>
+                    <span>*Max height: </span>
+                    <input // SI o SI
+                    type="text"
+                    placeholder='Altura max' 
+                    value={newBreed.max_height}
+                    name= "max_height"
+                    onChange={onInputChange}/>
+                    <span> cm</span>
+                    {errors.max_height && (
+                        <p className={styles.errorP}>{errors.max_height}</p>
+                    )}
+                </div>
+                <div> 
+                    <span>*Min weight: </span>
+                    <input // SI o SI
+                    type="text"
+                    placeholder='Peso min' 
+                    value={newBreed.min_weight}
+                    name= "min_weight"
+                    onChange={onInputChange}/>
+                    <span> kg</span>
+                    {errors.min_weight && (
+                        <p className={styles.errorP}>{errors.min_weight}</p>
+                    )}
+                </div>
+                <div>
+                    <span>*Max weight: </span>
+                    <input // SI o SI
+                    type="text"
+                    placeholder='Peso max' 
+                    value={newBreed.max_weight}
+                    name= "max_weight"
+                    onChange={onInputChange}/>
+                    <span> kg</span>
+                    {errors.max_weight && (
+                        <p className={styles.errorP}>{errors.max_weight}</p>
+                    )}
+                </div>
+                <div> 
+                    <span>Life span: </span> 
+                    <input 
+                    type="text"
+                    placeholder='Life span'
+                    value={newBreed.life_span}
+                    name="life_span"
+                    onChange={onInputChange}/>
+                    <span> years</span>
+                    {errors.life_span && (
+                        <p className={styles.errorP}>{errors.life_span}</p>
+                    )} 
+                </div>
+                <div> 
+                    <span>Image: </span> 
+                    <input 
+                    type="text" 
+                    placeholder='Image'
+                    value={newBreed.image}
+                    name="image"
+                    onChange={onInputChange}/>
+                    {errors.image && (
+                        <p className={styles.errorP}>{errors.image}</p>
+                    )} 
+                </div>
+                <div>
+                    <select name="temperament" id="" onChange={onSelectChange}>
+                        <option value="">Select temperaments</option>
+                        {temperaments.map(e => { 
+                            return <option key={e.id} value={`${e.id},${e.name}`}>{e.name}</option>
+                        })}
+                    </select>
+                    {temperamentName.name.map(el => { 
+                    return <p key={el}>{" -" + el} <button value={el} onClick={removeTemperamentButton}>X</button></p>
                     })}
-                </select>
-                {temperamentName.name.map(el => { 
-                   return <h5 key={el}>{" -" + el} <button value={el} onClick={removeTemperamentButton}>X</button></h5>
-                })}
-            </div>
-            {Object.keys(errors).length === 0 &&  newBreed.name !== "" && newBreed.min_height !== "" && newBreed.max_height !== "" && newBreed.min_weight !== "" && newBreed.max_weight !== ""
-            ? <button type='submit'>Crear nueva raza</button> 
-            : <p style={{color:"red"}}>Completar los campos obligatorios * para crear su raza</p>}
-        </form>
+                </div>
+                {Object.keys(errors).length === 0 &&  newBreed.name !== "" && newBreed.min_height !== "" && newBreed.max_height !== "" && newBreed.min_weight !== "" && newBreed.max_weight !== ""
+                ? <button className={styles.createButton} type='submit'>Create new breed!</button> 
+                : <p className={styles.errorP}>Complete * fields to create your breed</p>}
+            </form>
+        </div>
     </div>
 
   )
 }
 
 
-/* 
-Ruta de creación de raza de perro: debe contener
 
-[ ] Un formulario controlado con JavaScript con los siguientes campos:
-Nombre
-Altura (Diferenciar entre altura mínima y máxima)
-Peso (Diferenciar entre peso mínimo y máximo)
-Años de vida
-[ ] Posibilidad de seleccionar/agregar uno o más temperamentos
-[ ] Botón/Opción para crear una nueva raza de perro
-Es requisito que el formulario de creación esté validado con JavaScript y no sólo con validaciones HTML. Pueden agregar las validaciones que consideren. Por ejemplo: Que el nombre de la raza no pueda contener números o símbolos, que el peso/altura mínimo no pueda ser mayor al máximo y viceversa, etc.
-*/

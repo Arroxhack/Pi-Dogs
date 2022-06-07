@@ -1,0 +1,44 @@
+.body{
+    height: 100vh;
+    background-image: url("../../img/the-dk-photography-yG_8-55cXV4-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+
+    /* background-color: #a4ffce; */
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.button{
+    width: fit-content;
+    background-color: rgba(225, 217, 217, 0.5);
+    border-radius: 5px;
+    border: solid black;
+    padding: 5px;
+    position: relative;
+    right: 10px;
+    top: 10px;
+}
+
+.button:hover{
+    background-color: rgba(225, 217, 217, 0.8);
+}
+
+.navLink{
+    text-decoration: none;
+    color: orangered;
+}
+
+.searchBarDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+

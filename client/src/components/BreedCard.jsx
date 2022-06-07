@@ -15,9 +15,3 @@ export default function BreedCard({ id, name, image, temperament, min_weight, ma
     ) 
 }
 
-/* 
-"temperament": [
-            "Stubborn",
-            "Curious"
-        ]
-*/

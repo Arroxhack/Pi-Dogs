@@ -1,8 +1,6 @@
 import './App.css';
 import {Route} from "react-router-dom"
 import Home from './components/Home';
-// import Breeds from './components/Breeds';
-// import SearchBar from './components/SearchBar';
 import LandingPage from './components/LandingPage';
 import BreedDetail from './components/BreedDetail';
 import Form from './components/Form';

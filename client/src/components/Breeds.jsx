@@ -1,5 +1,3 @@
-//rfc para crear componente
-
 import React from "react";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -8,13 +6,14 @@ import Pagination from "./Pagination";
 import BreedCard from "./BreedCard";
 import Order from "./Order";
 import Filter from "./Filter";
+import styles from "./CSS/Breeds.module.css"
 
 export default function Breeds(){
 
     const dispatch = useDispatch(); // con el useDispatch transformo la funcion action creator en dispatcher para que se pueda conectar al reducer
 
     const breeds = useSelector(state => state.breeds); //useSelector recibe una funcion con el state y luego yo puedo retornar el pedazo de estado que quiero y asignarselo a una variable.
-    //console.log(breeds)
+    
 
     // Get current breed
     const [currentPage, setCurrentPage] = useState(1);
@@ -41,7 +40,6 @@ export default function Breeds(){
             <Filter breeds={breeds}/>
             {currentBreeds[0].error ? <h4>{currentBreeds[0].error}</h4> 
             : currentBreeds.map(breed => {
-                // if(e.id.length > 8){
                     return(
                         <BreedCard key={breed.id}
                         id={breed.id} 
@@ -61,9 +59,5 @@ export default function Breeds(){
         </div>
     )
 }
-
 // con useSelector le digo que en la variable breeds se aloje lo que esta en mi estado global state.breeds, que luego de el useEffect, o sea al montarse, se va a cargar gracias a mi dispatch(getAllBreeds()) con todas las razas, ya que mi funcion getAllBreeds() retorna una funcion con el dispatch, esto lo toma el thunk middleware que me permite hacer mi promesa asincrona con axios y lo que me devuelve mi promesa lo despatcho con una action con, con un type adecuado y un payload con la resolucion de la promesa a mi reducer. Finalmente mi reducer se encarga de actualizar mi estado global y mis componentes que lo consumen a traves por ejemplo de un useSelector se ven modificados al este modificarse
 
-
-
-// Lo que se use en varios componentes usar estado global, lo que se use en uno solo, estado local.

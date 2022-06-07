@@ -1,0 +1,32 @@
+.backgroundPicture{
+    height: 100vh;
+    background-image: url("../../img/linda-segerfeldt-oEcsvUfCr1c-unsplash.jpg");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.button{
+    /* border: 2px solid red; */
+    position: relative;
+    top: 130px;
+    left: -230px;
+    border-color: rgb(255, 242, 0);
+    /* border-color: rgb(255, 166, 0); */
+    border-radius: 10px;
+    /* background-color: rgba(0, 255, 255, 0.200); */
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    box-shadow: rgba(217, 136, 15, 0.600) 5px 5px, rgba(217, 136, 15, 0.5) 10px 10px, rgba(217, 136, 15, 0.4) 15px 15px, rgba(217, 136, 15, 0.3) 20px 20px, rgba(217, 136, 15, 0.2) 25px 25px, rgba(217, 136, 15, 0.1) 30px 30px,
+    rgba(217, 136, 15, 0.05) 35px 35px;
+}
+
+.button:hover{
+    background-color: rgba(255, 69, 0, 0.2);
+}
+
+.navLink{
+    padding: -20px;
+    text-decoration: none;
+    color: orangered;
+}

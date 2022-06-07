@@ -18,8 +18,8 @@ module.exports = (sequelize) => {
         allowNull: false,
     },
     weight: {
-    type: DataTypes.STRING,
-    allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     life_span: {
         type: DataTypes.INTEGER,
