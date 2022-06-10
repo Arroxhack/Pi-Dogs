@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { sort } from '../store/actions';
-import styles from "./CSS/Order.module.css"
+import styles from "./CSS/Order.module.css";
 
 
 export default function Order() {

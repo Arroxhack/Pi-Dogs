@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import styles from "./CSS/Pagination.module.css";
 
 export default function Pagination({breedsPerPage, totalBreeds, paginate}) { // 8 // 175 // setCurrentPage(pageNumber)
     const pageNumbers = [];
@@ -8,16 +9,15 @@ export default function Pagination({breedsPerPage, totalBreeds, paginate}) { // 
     }
 
   return (
-    <div>
-        <ul>
+    <div className={styles.bodyDiv}>
             {pageNumbers.map(pageNumber => ( // por cada page number un boton con el numero y que al hacer click se ejecuta la funcion setCurrentPage(pageNumber)
-                <li key={pageNumber}>
+                <li key={pageNumber} className={styles.li}>
                     <button onClick={()=> paginate(pageNumber)}>
                         {pageNumber}
                     </button>
                 </li>
             ))}
-        </ul>
+
     </div>
   )
 }

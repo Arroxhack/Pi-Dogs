@@ -1,21 +1,25 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import styles from "./CSS/DetailCard.module.css";
 
 export default function DetailCard({dogId}) {
+  if(dogId.notFound || dogId === null){
+    return (
+      <div>
+        <h3>{dogId.notFound}</h3>
+      </div>
+    )
+  }
   return (
-    <div>
-      <NavLink exact to="/home">
-        <button>Home</button>
-      </NavLink>
-      <h3>{dogId.name}</h3>
-      <img src={dogId.image} alt= {`Raza Creada ${dogId.name}`} width="100px" /> {/* ACORDATE DE SACAR EL WIDTH */}
-      <h4>{dogId.temperament ? `Temperamento: ${dogId.temperament}` : `No tiene temperamento`}</h4>
-      <h4>{dogId.min_weight === null ? `Peso min: desconocido` : `Peso min: ${dogId.min_weight} kg`}</h4>
-      <h4>{dogId.max_weight === null ? `Peso max: desconocido` : `Peso max: ${dogId.max_weight} kg`}</h4>
-      <h4>{dogId.min_height === null ? `Altura min: desconocida` : `Altura min: ${dogId.min_height} cm`}</h4>
-      <h4>{dogId.max_height === null ? `Altura max: desconocida` : `Altura max: ${dogId.max_height} cm`}</h4>
-      <h4>{dogId.min_life_span === null || dogId.min_life_span === false ? `Años de vida min: desconocidos` : `Años de vida min: ${dogId.min_life_span}`}</h4>
-      <h4>{dogId.max_life_span === null || dogId.max_life_span === false ? `Años de vida max: desconocidos` : `Años de vida max: ${dogId.max_life_span}`}</h4>
+    <div className={styles.bodyDiv}>
+      <h3 className={styles.name}>{dogId.name}</h3>
+      <img src={dogId.image} alt= {`Created breed ${dogId.name}`} className={styles.image} />  
+      <h4 className={styles.temperament}>{dogId.temperament ? `Temperament: ${dogId.temperament}` : `Unknown temperament`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.min_weight === null ? `Min weight: unknown` : `Min weight: ${dogId.min_weight} kg`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.max_weight === null ? `Max weight: unknown` : `Max weight: ${dogId.max_weight} kg`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.min_height === null ? `Min height: unknown` : `Min height: ${dogId.min_height} cm`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.max_height === null ? `Max height: unknown` : `Max height: ${dogId.max_height} cm`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.min_life_span === null || dogId.min_life_span === false ? `Min life span: unknown` : `Min life span: ${dogId.min_life_span}`}</h4>
+      <h4 className={styles.weightAndHeight}>{dogId.max_life_span === null || dogId.max_life_span === false ? `Max life span: unknown` : `Max life span: ${dogId.max_life_span}`}</h4>
     </div>
   )
 }

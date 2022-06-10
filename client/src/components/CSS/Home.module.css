@@ -1,5 +1,5 @@
 .body{
-    height: 100vh;
+    height: 120vh;
     background-image: url("../../img/the-dk-photography-yG_8-55cXV4-unsplash.jpg");
     background-size: cover;
     background-position: center;
@@ -8,6 +8,7 @@
     /* background-color: #a4ffce; */
     display: flex;
     flex-direction: column;
+    
 }
 
 .buttonDiv{
@@ -40,5 +41,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    width: fit-content;
+    top: -20px;
+    align-self: center;
 }
 

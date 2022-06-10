@@ -1,0 +1,12 @@
+.bodyDiv{
+    height: fit-content;
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+
+.li{
+    display: inline;
+    padding: 3px;
+}

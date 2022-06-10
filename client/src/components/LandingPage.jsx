@@ -1,6 +1,6 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import styles from "./CSS/LandingPage.module.css"
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styles from "./CSS/LandingPage.module.css";
 
 
 export default function LandingPage() {

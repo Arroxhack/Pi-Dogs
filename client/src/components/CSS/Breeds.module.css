@@ -4,6 +4,26 @@
     align-items: center;
 }
 
+.orderFilterDiv{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: -10px;
+}
+
 .h1{
     top: 50px;
 }
+
+
+.cardsDivContainer{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    max-width: 1000px;
+    max-height: fit-content;
+    flex-wrap: wrap;
+    top: -10px
+}
+

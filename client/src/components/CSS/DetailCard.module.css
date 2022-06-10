@@ -1,0 +1,46 @@
+
+.bodyDiv{
+    display: flex;
+    width: 400px;
+    height: 420px;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-between;
+    border: 1px solid black;  
+    position: relative;
+    align-self: center;
+    top: 15px;
+    background-color: rgba(250, 235, 215, 0.4);
+}
+
+.name{
+    margin: 0;
+    margin-bottom: 1px;
+    width: fit-content;
+    height: fit-content; 
+    text-decoration: underline;
+    color: rgba(127, 255, 212);
+}
+
+.image{
+    width: 240px;
+    height: 180px;
+    border: 2px solid black;
+}
+
+.temperament{
+    background-color: rgba(0, 255, 255, 0.2);
+    margin: 0;
+    margin-bottom: 2px;
+    width: fit-content;
+    height: fit-content;
+    border: 2px solid black;
+    color: black;
+}
+
+.weightAndHeight{
+    margin: 0;
+    width: fit-content;
+    height: fit-content;
+    color: black;
+}

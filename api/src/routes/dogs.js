@@ -8,18 +8,23 @@ const api_key = "d0ca73ad-ed44-4042-800e-7e678dc1959d"
 
 
 router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o razaCreada
+
     const {name} = req.query;
+
     if(!name){
         const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
         const promiseDbDogs = Breed.findAll(
-            {include: Temperament})
+                                {include: Temperament}
+                            )
         Promise.all([
             promiseApiDogs,
             promiseDbDogs
         ])
         .then((response) => {
             const [apiDogs, dbDogs] = response
+
             let allDogs = []
+
             apiDogs.data.forEach(dog => {
                 allDogs.push({
                     id: dog.id,
@@ -30,6 +35,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     max_weight: Number(dog.weight.metric.split(" - ")[1])
                 })
             })
+
             dbDogs.forEach(dog => {
                 allDogs.push({
                     id: dog.id,
@@ -40,28 +46,32 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                     image: dog.image ? dog.image : null
                 })
             })
-        // console.log(apiDogs.data)
-        // console.log(dbDogs)
+
+
         return res.json(allDogs)
         })
         .catch(error => {
             return next(error)
         })    
     }
+
     if(name){
         const promiseApiDogs = axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`)
-        const promiseDbDogs = Breed.findAll(
-            {where: {name: {
-                [Op.iLike]: `%${name}%`
-            }},
-            include: Temperament})
+        const promiseDbDogs = Breed.findAll({
+                                    where: {name: {
+                                        [Op.iLike]: `%${name}%`
+                                    }},
+                                    include: Temperament
+                                })
         Promise.all([
             promiseApiDogs,
             promiseDbDogs
         ])
             .then((response) => {
                 const [apiDogs, dbDogs] = response
+
                 let dogsWithName = []
+
                 apiDogs.data.forEach(dog => {
                     if(dog.name.toLowerCase().includes(name.toLowerCase())){
                         dogsWithName.push({
@@ -74,6 +84,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                         })
                     }
                 })
+
                 dbDogs.forEach(dog => {
                         dogsWithName.push({
                             id: dog.id,
@@ -84,8 +95,7 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
                             image: dog.image ? dog.image : null,
                         })
                 })
-            // console.log(apiDogs.data)
-            // console.log(dbDogs)
+
             return res.json(dogsWithName.length > 0 ? dogsWithName : [{error:"No contamos con esa Raza"}])
             })
             .catch(error => {
@@ -96,13 +106,18 @@ router.get("/", async(req, res, next) => {  // /dogs y /dogs?name=razaDeApi o ra
 
 
 router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb 
+
     const {idBreed} = req.params;
+
     if(idBreed.length > 8){
+
         try{
             const myBreed = await Breed.findByPk(idBreed,{
                 include: Temperament
             })
+
             const myBreedDetail = Object.assign([{}],
+
                 [{
                 id: myBreed.id,
                 name: myBreed.name,
@@ -116,15 +131,20 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb
                 image: myBreed.image ? myBreed.image : null    
                 }] 
             )
-            return res.json(myBreedDetail ? myBreedDetail : "El id ingresado no corresponde a una raza")
-        }catch(error) {
+
+            return res.json(myBreedDetail)
+        }catch(error){
             next(error)
         }
+
     } else {
+
     const idBreedNum = Number(idBreed);
+
         try{
             const response = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`);
             const responseFiltrada = response.data.filter(e => e.id === idBreedNum);
+            console.log(responseFiltrada)
             const responseMapeada = responseFiltrada.map(e => {
                 let newObj = {
                     id: e.id,
@@ -140,7 +160,8 @@ router.get("/:idBreed", async(req, res, next) => { // /dogs/idDeApi o idDb
                 };
                 return newObj;
             })
-            res.json(responseMapeada.length > 0 ? responseMapeada : "El id ingresado no corresponde a una raza")
+            console.log(responseMapeada)
+            res.json(responseMapeada.length > 0 ? responseMapeada : [{notFound: "El id ingresado no corresponde a una raza"}])
         }catch(error){
             return next(error)
         }

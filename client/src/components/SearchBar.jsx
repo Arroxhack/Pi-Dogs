@@ -2,14 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react' ;
 import { searchBreedName } from '../store/actions';
 import { useDispatch } from 'react-redux';
-import styles from "./CSS/SearchBar.module.css"
+import styles from "./CSS/SearchBar.module.css";
 
 export default function SearchBar() {
     const [search, setSearch] = useState("")
 
     const dispatch = useDispatch()
 
-    let onInputChange = (e) => { // seteo mi estado a lo que el usuario tipea
+    let onInputChange = (e) => { 
         e.preventDefault(e);
         setSearch(e.target.value)
     }

@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV4
       },  
-    name: { // nombre del temperamento
+    name: { 
       type: DataTypes.STRING,
     }
   });

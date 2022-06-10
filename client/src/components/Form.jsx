@@ -2,21 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { NavLink} from 'react-router-dom';
 import { postNewBreed, getAllTemperaments } from '../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from "./CSS/Form.module.css"
+import styles from "./CSS/Form.module.css";
 
 
 export default function Form() {
 
 const [errors, setErrors] = useState({})
 
-/*  name: "", //name: lo que escribaa
-    min_height: 1,
-    max_height: 1,
-    min_weight: 1,
-    max_weight: 1,
-    life_span: 1,
-    temperament: [],
-    image: "" */
 
 function validate(newBreed){
     let errors = {};

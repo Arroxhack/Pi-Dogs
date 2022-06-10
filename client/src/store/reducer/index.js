@@ -1,4 +1,4 @@
-import {GET_BREEDS, SORT, GET_TEMPERAMENTS, FILTER_TEMPERAMENT, FILTER_DB_OR_API_BREED, SEARCH_BREED_NAME, POST_NEW_BREED} from "../actions"
+import {GET_BREEDS, SORT, GET_TEMPERAMENTS, FILTER_TEMPERAMENT, FILTER_DB_OR_API_BREED, SEARCH_BREED_NAME, POST_NEW_BREED} from "../actions";
 
 
 const initialState = {
@@ -7,7 +7,7 @@ const initialState = {
     noModificationBreeds: [],
 }
 
-export default function reducer(state=initialState, action){ // action = {type, payload}
+export default function reducer(state=initialState, action){ 
     switch(action.type){
 
         case GET_BREEDS: 
@@ -40,8 +40,7 @@ export default function reducer(state=initialState, action){ // action = {type, 
             let filteredBreedsTemperament = action.payload === "" ? allBreeds : allBreeds.filter(e => e.temperament.includes(action.payload)); 
             return{
                 ...state,
-                breeds: filteredBreedsTemperament,
-                filteredBreeds: filteredBreedsTemperament
+                breeds: filteredBreedsTemperament
             }
 
 
@@ -65,7 +64,7 @@ export default function reducer(state=initialState, action){ // action = {type, 
             orderedBreeds = orderedBreeds.sort((a, b) => {
                 if(action.payload === "ascendente" || action.payload === "descendente"){
                     if(a.name > b.name){
-                        return action.payload === "ascendente" ? 1 : -1; // por payload le paso el valor ascendete y descendente
+                        return action.payload === "ascendente" ? 1 : -1; 
                     }
                     if(a.name < b.name){
                         return action.payload === "ascendente" ? -1 : 1;

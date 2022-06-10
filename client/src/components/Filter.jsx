@@ -1,7 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import { filterTemperament, filterDbOrApiBreeds } from '../store/actions';
-import styles from "./CSS/Filter.module.css"
+import styles from "./CSS/Filter.module.css";
 
 export default function Filter() {
     const dispatch = useDispatch();
@@ -17,7 +17,6 @@ export default function Filter() {
 
     return (
         <div className={styles.bodyDivFilter}>
-            <div></div>
             <select name="select" onChange={onSelectTemperament} className={styles.select}>
                 <option value="">All temperaments</option>
                 {temperaments.map(e => {

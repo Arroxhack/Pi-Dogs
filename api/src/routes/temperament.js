@@ -20,7 +20,7 @@ router.get("/", async(req, res, next) => { // /temperament
         const breeds = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${api_key}`);
 
         let temperaments = breeds.data.map(e => e.temperament); // arreglo de strings
-        temperaments = temperaments.join(", ").split(", ") // agrego ", " en el join para luego que me quede parejo en el split(", ")
+        temperaments = temperaments.join(", ").split(", ") // agrego ", " en el join para que luego me quede parejo en el split(", ")
         temperaments = temperaments.filter(e => e.length > 0) // elimino los ""
         temperaments.forEach(e => allTemperaments.push({name: e}))
         allTemperaments.forEach(async(e) => {
@@ -31,7 +31,7 @@ router.get("/", async(req, res, next) => { // /temperament
             )
         })
         temperamentsDb = await Temperament.findAll();    
-        // console.log(temperamentsDb.length)    
+   
         return res.json(temperamentsDb)
    
     } catch (error) {

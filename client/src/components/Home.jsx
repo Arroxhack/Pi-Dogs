@@ -1,8 +1,8 @@
-import React from 'react'
-import SearchBar from './SearchBar'
-import Breeds from './Breeds'
-import { NavLink } from 'react-router-dom'
-import styles from "./CSS/Home.module.css"
+import React from 'react';
+import SearchBar from './SearchBar';
+import Breeds from './Breeds';
+import { NavLink } from 'react-router-dom';
+import styles from "./CSS/Home.module.css";
 
 export default function Home() {
   return (
