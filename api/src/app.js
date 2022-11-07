@@ -16,7 +16,7 @@ server.use(express.json({ limit: '50mb' })); // cambie bodyParser por express po
 server.use(cookieParser());
 server.use(morgan('dev'));
 server.use((req, res, next) => { // todo esto es configuracion de cors
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // update to match the domain you will make the request from // En caso de algun problema cambiamos http://localhost:3000 por *
+  res.header('Access-Control-Allow-Origin', '*' /* 'http://localhost:3000' */); // update to match the domain you will make the request from // En caso de algun problema cambiamos http://localhost:3000 por *
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
