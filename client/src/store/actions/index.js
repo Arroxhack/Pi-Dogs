@@ -9,13 +9,17 @@ export const FILTER_DB_OR_API_BREED = "FILTER_DB_OR_API_BREED";
 export const SEARCH_BREED_NAME = "SEARCH_BREED_NAME";
 export const POST_NEW_BREED = "POST_NEW_BREED";
 
-const PATH = "http://localhost:3001"
+/* const PATH = "http://localhost:3001" */
+
+
+
 
 
 export function getAllBreeds(){
     return async function(dispatch){
         try{
-            let breeds = await axios.get(`${PATH}/dogs`)
+            /* let breeds = await axios.get(`${PATH}/dogs`) */
+            let breeds = await axios.get(`/dogs`)
             let breedsData = breeds.data
             return dispatch({
                 type: GET_BREEDS,
@@ -32,7 +36,7 @@ export function getAllBreeds(){
 export function getAllTemperaments(){
     return async function(dispatch){
         try{
-            let temperaments = await axios.get(`${PATH}/temperament`)
+            let temperaments = await axios.get(`/temperament`)
             let temperamentsData = temperaments.data
             return dispatch({
                 type: GET_TEMPERAMENTS,
@@ -48,7 +52,7 @@ export function getAllTemperaments(){
 export function searchBreedName(name){
     return async function (dispatch){
         try {
-            let breed = await axios.get(`${PATH}/dogs?name=${name}`)
+            let breed = await axios.get(`/dogs?name=${name}`)
             let breedData = breed.data
             return dispatch({
                 type: SEARCH_BREED_NAME,
@@ -84,7 +88,7 @@ export function filterDbOrApiBreeds(name){
 export function postNewBreed(newBreed){
     return async function (dispatch){
         try {
-            let newBreedCreated = await axios.post(`${PATH}/dog`, newBreed)
+            let newBreedCreated = await axios.post(`/dog`, newBreed)
             let newBreedCreatedData = newBreedCreated.data
             return newBreedCreatedData
         } 

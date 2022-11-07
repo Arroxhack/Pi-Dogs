@@ -7,7 +7,8 @@ export default function LandingPage() {
   return (
     <div className={styles.backgroundPicture}>
         <button className={styles.button}>
-            <NavLink className={styles.navLink} exact to="/home" >BRING.. THE.. DOGGIES!
+            <NavLink className={styles.navLink} exact to="/home" >
+              BRING.. THE.. DOGGIES!
             </NavLink>
         </button>
         

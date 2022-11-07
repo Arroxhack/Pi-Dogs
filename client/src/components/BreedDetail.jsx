@@ -14,7 +14,8 @@ export default function BreedDetail(){
 
     useEffect(() => { 
         const axiosData = async() => {
-        const response = await axios.get(`http://localhost:3001/dogs/${id}`)
+        /* const response = await axios.get(`http://localhost:3001/dogs/${id}`) */
+        const response = await axios.get(`/dogs/${id}`)
         setDogId(response.data)
     }
     axiosData()
